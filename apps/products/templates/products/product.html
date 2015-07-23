@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>product</title>
+  </head>
+  <body>
+    <h1>{{ product.name }}</h1>
+    <a href="{% url 'index' %}">Go to Product Listing</a>
+    <form action="{% url 'update' %}" method='post'>
+      {% csrf_token %}
+      Manufacturer/Brand: <select name="brand">
+        <option value='{{ product.brand.id }}'selected>{{ product.brand }}</option>
+        {% for brand in brands %}
+          <option value="{{ brand.id }}">{{ brand.name }}</option>
+        {% endfor %}
+      </select><br>
+      Product Name: <input type='text' name='product_name' value="{{ product.name }}"><br>
+      Price($): <input type='text' name='price' value="{{ product.price }}"></br>
+      Description: <textarea name='description'>{{ product.description }}</textarea>
+      <input type='hidden' name='product_id' value='{{ product.id }}'>
+      <input type='submit' value='update'>
+      <a href='{% url 'delete' product.id %}'>Delete</a>
+    </form>
+  </body>
+</html>
